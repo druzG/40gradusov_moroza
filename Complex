@@ -1,0 +1,149 @@
+#include <iostream>
+#include <string>
+#include "locale.h"
+#include <list>
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using std::list;
+class complex {
+private:
+	double re;
+	double im;
+public:
+	void setRe(double real);
+	void setIm(double imag);
+	double getRe();
+	double getIm();
+	void add(complex& item);
+	void sub(complex& item);
+	double abs();
+	complex(double real, double imag) {}
+	~complex() { }
+};
+void complex::setRe(double real) {
+	re = real;
+}
+void complex::setIm(double imag) {
+	im = imag;
+}
+double complex::getRe() {
+	return re;
+}
+double complex::getIm() {
+	return im;
+}
+complex::complex(double real, double imag) {
+	setRe(real);
+	setIm(imag);
+}
+void complex::add(complex& item) {
+	setRe((re + item.getRe()));
+	setIm((im + item.getIm()));
+}
+void complex::sub(complex& item) {
+	setRe((re*item.getRe()) - im*item.getIm());
+	setIm((re*item.getIm() + im*item.getRe()));
+}
+double complex::abs() {
+	return(re*re + im*im);
+}
+class math_vector {
+private:
+	unsigned int dim;
+	list<complex> crd;
+	void resize(unsigned int size);
+	unsigned int getDim();
+public:
+	complex abs();
+	void add(math_vector& item);
+	complex scalar_product(math_vector& item);
+	math_vector(int dimm);
+	~math_vector() {}
+};
+void math_vector::resize(unsigned int size) {
+	crd.resize(size);
+	dim = size;
+}
+unsigned int math_vector::getDim() {
+	return dim;
+}
+math_vector::math_vector(int dimm) {
+	resize(dimm);
+}
+complex math_vector::abs() {
+	complex result(0, 0);
+	complex square(0, 0);
+	list<complex>::iterator it;
+	for (it = crd.begin(); it != crd.end(); it++)
+	{
+		square.setIm(0);
+		square.setRe(0);
+		square = (*it);
+		square.sub(square);
+		result.add(square);
+	}
+	return result;
+}
+void math_vector::add(math_vector& item) {
+	list<complex>::iterator it;
+	list<complex>::iterator it2;
+	complex result(0, 0);
+	complex coordProd(0, 0);
+	if (dim == item.getDim()) {
+		coordProd.setIm = 0;
+		coordProd.setRe = 0;
+		for (it = crd.begin(), it2 = item.crd.begin(); it != crd.end(); it++, it2++) {
+			it->add((*it2));
+		}
+	}
+	if (crd.size() > item.crd.size()) {
+		complex temp(0, 0);
+		while (dim != item.getDim()) {
+			item.crd.push_back(temp);
+		}
+		item.resize(crd.size());
+		add(item);
+	}
+	if (crd.size()  < item.crd.size()) {
+		complex temp(0, 0);
+		while (dim != item.getDim()) {
+			crd.push_back(temp);
+		}
+		resize(item.crd.size());
+		add(item);
+	}
+}
+complex math_vector::scalar_product(math_vector& item) {
+	list<complex>::iterator it;
+	list<complex>::iterator it2;
+	complex result(0, 0);
+	complex coordProd(0, 0);
+	if (dim == item.getDim()) {
+		coordProd.setIm = 0;
+		coordProd.setRe = 0;
+		for (it = crd.begin(), it2 = item.crd.begin(); it != crd.end(); it++, it2++) {
+			it->sub((*it2));
+			result.add(*it);
+		}
+	}
+	if (crd.size() > item.crd.size()) {
+		complex temp(0, 0);
+		while (dim != item.getDim()) {
+			item.crd.push_back(temp);
+		}
+		item.resize(crd.size());
+		scalar_product(item);
+	}
+	if (crd.size()  < item.crd.size()) {
+		complex temp(0, 0);
+		while (dim != item.getDim()) {
+			crd.push_back(temp);
+		}
+		resize(item.crd.size());
+		scalar_product(item);
+	}
+	return result;
+}
