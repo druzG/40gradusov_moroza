@@ -104,7 +104,7 @@ inline void dlinkedlist::erase(int pos) {
 		}
 	}
 }
-// change element on pos (item,pos);
+// меняем элемент на месте pos (item,pos);
 inline void dlinkedlist::changeEl(int item, int pos) {
 	node* tmp(tail);
 	int tmp_c(count);
