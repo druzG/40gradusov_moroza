@@ -1,0 +1,55 @@
+#include <iostream>
+#include "stdafx.h"
+
+class stack {
+
+private:
+	/* список свойств и методов для использования внутри класса */
+	struct node {
+		int value;
+		node* prev = nullptr;		//указатели всегда надо присваивать значение при объявлении
+	};
+	node* top;
+	bool is_empty();
+	int size = 0;
+
+public: 
+	/* список методов доступных другим функциям и объектам программы */
+	stack() : top(nullptr) {}		//деструктор и параметр по умолчанию
+	~stack() {}
+	void push(int value);
+	int* pop();
+	void reverse();
+};
+
+inline bool stack::is_empty() {
+	return !top;					//если стек пустой, то вернется 1 (тру) и наоборот
+}
+
+inline void stack::push(int value) {
+	node* tmp = new node();			//Выделяем память для нового элемента
+	tmp->value = value;				//Записываем в поле value принимаемый в функцию элемент value
+	tmp->prev = top;				//Указываем, что предыдущий элемент это следующий
+	top = tmp;						//Сдвигаем голову на позицию вперед
+	size++;
+}
+
+inline int* stack::pop() {
+	if (!is_empty()) {				//пока стек не пустой
+		size--;
+		int* tmp_val = new int(top->value); //Временная переменная для хранения адреса предыдущего элемента
+		node* tmp_top = top;		//создаем указатель типа node и приравниваем(ставим) его на вершину стека
+		top = top->prev;				//Пишем, что вершиной теперь является предыдущий элемент
+		delete tmp_top;				//освобождаем память
+		return tmp_val;
+	}
+	return nullptr;
+}
+
+inline void stack::reverse() {
+	int m_size = size;
+	int** adress_array = new int*[m_size];
+	for (int i = 0; i <= m_size; i++) { adress_array[i] = pop(); }
+//	std::cout << adress_array[0] << " " << adress_array[1];
+	for (int tmp = 0; tmp < m_size; tmp++) { push(*adress_array[tmp]); }
+}
