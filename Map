@@ -77,18 +77,13 @@ int map::getKey(string name) {
 
 int main() {
 	map test;
-	/*int a, b, c, d, e, f;
-	test.addItem("Mike", 15);
-	test.addItem("Guffy", 15);
-	test.addItem("Antony", 0);
-	test.addItem("John", 30);
-	test.addItem("Dennis", 20);
-	a = test.getKey("Mike");
-	b = test.getKey("Guffy");
-	c = test.getKey("Dennis");
-	d = test.getKey("John");
-	e = test.getKey("Antony");
-	f = test.getKey("Malia");
-	cout << a << " " << b << " " << c << " " << d << " " << e << " " << f;*/
+	/*int a1, a2, a3;
+	test.addItem("Sawa", 1);
+	test.addItem("Mawa", 3);
+	test.addItem("Sigismund", 0);
+	a1 = test.getKey("Sawa");
+	a2 = test.getKey("Mawa");
+	a3 = test.getKey("Sigismund");
+	cout << a1 << " " << a2 << " " << a3;*/
 	return 0;
 }
